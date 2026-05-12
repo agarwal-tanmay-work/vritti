@@ -69,5 +69,13 @@ export default defineConfig({
     checks: {
       pluginTimings: false,
     },
+    worker: {
+      format: 'es',
+      rollupOptions: {
+        output: {
+          entryFileNames: 'assets/[name]-[hash].js',
+        },
+      },
+    },
   },
 })

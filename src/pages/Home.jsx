@@ -151,7 +151,6 @@ export default function Home() {
     document.title = 'Vritti';
   }, [location]);
   const navigate = useNavigate();
-  const goSampleReport = () => navigate('/analyse', { state: { runSample: true } });
   useReveal();
 
   const scoreRef = useRef(null);
@@ -190,9 +189,6 @@ export default function Home() {
             <button id="hero-cta-primary" className="btn-primary" onClick={() => navigate('/analyse')}>
               Analyse My Trades →
             </button>
-            <button id="hero-cta-secondary" className="btn-secondary" onClick={goSampleReport}>
-              View Sample Report
-            </button>
           </div>
           <p className="hero-note">No account needed · Your data never leaves your browser · Zero servers</p>
         </div>
@@ -208,9 +204,6 @@ export default function Home() {
               them behave better. Vritti is the only tool built around that exact idea. We don&apos;t predict
               markets. We analyse your trades and show you the patterns you can&apos;t see yourself.
             </p>
-            <button className="btn-secondary" onClick={() => navigate('/about')}>
-              See How It Works →
-            </button>
           </div>
           <div className="split-visual">
             <div className="score-anim-container">
@@ -273,7 +266,6 @@ export default function Home() {
             <p>
               You cut your winners in 8 days and hold your losers for 41. Vritti shows this as a visual with green bars short and red bars long so you can&apos;t unsee it. This is loss aversion, and it&apos;s the most expensive bias in your portfolio.
             </p>
-            <button className="btn-secondary" onClick={goSampleReport}>View Sample Dashboard →</button>
           </div>
         </div>
 
@@ -283,7 +275,6 @@ export default function Home() {
             <p>
               Vritti re-runs your trade history assuming you traded without panic, without FOMO, without revenge. Then it shows you the difference in rupees. For most retail traders, the number is uncomfortable.
             </p>
-            <button className="btn-secondary" onClick={goSampleReport}>Try with Demo Data →</button>
           </div>
           <div className="feature-row-visual right">
             <div className="counterfactual-visual">
@@ -314,7 +305,6 @@ export default function Home() {
             <p>
               &quot;Last 4 times Nifty fell 2% in a day, you sold within 3 hours. The stock recovered every time.&quot; Plain English warnings based on your actual patterns so you catch yourself before you repeat the same mistake again.
             </p>
-            <button className="btn-secondary" onClick={goSampleReport}>See Sample Nudges →</button>
           </div>
         </div>
       </section>

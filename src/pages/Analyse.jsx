@@ -13,12 +13,11 @@ export default function Analyse({ onAnalysisComplete }) {
   const [progressSteps, setProgressSteps] = useState([]);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
-  const locationPath = useLocationPath();
+  const location = useLocation();
 
   useEffect(() => {
     document.title = 'Analyse';
-  }, [locationPath]);
-  const location = useLocation();
+  }, [location]);
   const workerRef = useRef(null);
   const autoSampleStarted = useRef(false);
 
