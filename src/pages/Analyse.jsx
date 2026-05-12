@@ -16,7 +16,7 @@ export default function Analyse({ onAnalysisComplete }) {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = 'Analyse';
+    document.title = 'Vritti - Know Your Trading Mind';
   }, [location]);
   const workerRef = useRef(null);
   const autoSampleStarted = useRef(false);

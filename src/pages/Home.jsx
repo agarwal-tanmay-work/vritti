@@ -148,7 +148,7 @@ export default function Home() {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = 'Vritti';
+    document.title = 'Vritti - Know Your Trading Mind';
   }, [location]);
   const navigate = useNavigate();
   useReveal();

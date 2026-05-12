@@ -7,7 +7,7 @@ export default function ReportPrint({ analysis }) {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = 'Report';
+    document.title = 'Vritti - Know Your Trading Mind';
   }, [location]);
 
   useEffect(() => {

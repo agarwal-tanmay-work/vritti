@@ -54,7 +54,7 @@ export default function About() {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = 'About';
+    document.title = 'Vritti - Know Your Trading Mind';
   }, [location]);
 
   useEffect(() => {

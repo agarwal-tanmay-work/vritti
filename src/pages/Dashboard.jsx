@@ -24,7 +24,7 @@ export default function Dashboard({ analysis }) {
   const [params] = useSearchParams();
 
   useEffect(() => {
-    document.title = 'Dashboard';
+    document.title = 'Vritti - Know Your Trading Mind';
   }, []);
   const [radarProfile, setRadarProfile] = useState({ mine: true, ideal: true, top10: false });
   const [displayBehaviourScore, setDisplayBehaviourScore] = useState(0);
