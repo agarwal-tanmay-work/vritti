@@ -175,47 +175,10 @@ export default function Home() {
         <div className="hero-glow-orb" />
         <div className="hero-glow-orb-2" />
         <div className="home-hero-inner">
-          <div className="hero-product-stage" aria-hidden="true">
-            <div className="hero-product-shell hero-shell-left">
-              <span className="hero-shell-line short" />
-              <span className="hero-shell-line" />
-              <span className="hero-shell-line short" />
-              <div className="hero-shell-bars">
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
-            <div className="hero-product-shell hero-shell-right">
-              <span className="hero-shell-line short" />
-              <span className="hero-shell-line" />
-              <div className="hero-shell-chart">
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
-            <div className="hero-product-shell hero-shell-main">
-              <div className="hero-shell-head">
-                <span className="hero-shell-dot" />
-                <span className="hero-shell-dot" />
-                <span className="hero-shell-dot" />
-              </div>
-              <div className="hero-shell-grid">
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <div className="hero-shell-graph" />
-            </div>
-          </div>
           <div className="hero-eyebrow">BUILT FOR ZERODHA KITE · INSPIRED BY NITHIN KAMATH</div>
           <h1 className="hero-h1">
-            See The Trading<br />
-            Mistakes You Keep<br />
-            <span className="hero-h1-accent">Repeating</span>
+            See The Trading Mistakes<br />
+            You Keep <span className="hero-h1-accent">Repeating</span>
           </h1>
           <p className="hero-sub">
             Vritti analyses your Zerodha trade history and reveals the 13 psychological biases quietly

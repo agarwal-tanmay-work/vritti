@@ -24,14 +24,6 @@ export default function Navbar() {
           <li><NavLink to="/about" onClick={close}>About</NavLink></li>
         </ul>
 
-        <button
-          className="nav-cta-btn"
-          onClick={() => { close(); navigate('/analyse'); }}
-          aria-label="Analyse your trades"
-        >
-          Analyse Trades →
-        </button>
-
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle mobile menu">
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -50,12 +42,6 @@ export default function Navbar() {
             <NavLink to="/analyse" onClick={close}>Analyse</NavLink>
             <NavLink to="/dashboard" onClick={close}>Dashboard</NavLink>
             <NavLink to="/about" onClick={close}>About</NavLink>
-            <button
-              className="nav-cta-btn mobile-cta"
-              onClick={() => { close(); navigate('/analyse'); }}
-            >
-              Analyse Trades →
-            </button>
           </motion.div>
         ) : null}
       </AnimatePresence>

@@ -100,7 +100,7 @@ export default function About() {
               I build actual products. An anonymous whistleblower platform. A failure intelligence system. A fully autonomous video generator. I trade on Zerodha Kite myself, which is why Vritti isn't hypothetical. Every bias it detects is one I've caught in my own trades.
             </p>
             <p className="about-body-spaced">
-              I built Vritti because Nithin Kamath described exactly what AI should do for retail investors, and nobody had built it yet. I want to fix that from inside Zerodha.
+              I built Vritti because Nathan described exactly what AI should do for retail investors, and nobody had built it yet. I want to fix that from inside Zerodha.
             </p>
           </div>
           <div className="about-bio-actions">
@@ -122,6 +122,35 @@ export default function About() {
             >
               LinkedIn
             </a>
+          </div>
+        </div>
+
+        {/* NATHAN'S QUOTE */}
+        <div className="section reveal">
+          <div className="section-eyebrow">WHY I BUILT THIS</div>
+          <h2 className="section-heading">Inspired by Nathan</h2>
+          <div className="zerodha-note-card">
+            <div className="zerodha-note-body">
+              <p>
+                "People keep asking me if AI can help them make money from trading. My honest answer is not really.
+              </p>
+              <p className="zerodha-note-paragraph">
+                As long as there's a human in the loop, you're still dealing with the same creature driven by fear and greed, and that human will keep making the same mistakes. But beyond psychology, there's a bigger problem. There's no real informational edge left in markets. The odds are that everything is priced in. And even when it isn't, operating under that assumption is almost always a good idea.
+              </p>
+              <p className="zerodha-note-paragraph">
+                The people actually making consistent money in markets are high-frequency trading firms, market makers, prop desks etc that have built infrastructural and data moats over years, with significant investment of time and capital. Those are real edges.
+              </p>
+              <p className="zerodha-note-paragraph">
+                So, where does AI actually fit? It's a tool to help you behave better. Not to generate alpha.
+              </p>
+              <p className="zerodha-note-paragraph">
+                What it can do is help you build and test strategies, then execute them systematically, removing emotion from the equation. That means fewer panic sells, less revenge trading, and more consistency. What it can't do is turn a bad strategy into a good one or create a magic money tree.
+              </p>
+              <p className="zerodha-note-paragraph">
+                This is still an edge, just a different kind. AI can make you more disciplined, but not smarter. And if you think about where most trading losses actually come from, that distinction matters more than people realise."
+              </p>
+              <p className="zerodha-note-sig">— Nathan</p>
+            </div>
           </div>
         </div>
 
