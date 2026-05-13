@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Brain, TrendingUp, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 
 export default function ReportPrint({ analysis }) {

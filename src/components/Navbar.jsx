@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { VrittiLogo } from './VrittiLogo';
@@ -13,12 +13,12 @@ export default function Navbar() {
   return (
     <motion.nav className="navbar" initial={{ y: -70, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4 }}>
       <div className="navbar-inner">
-        <a href="/" className="nav-logo-link" aria-label="Go to home page" onClick={close}>
+        <Link to="/" className="nav-logo-link" aria-label="Go to home page" onClick={close}>
           <VrittiLogo size={28} />
-        </a>
+        </Link>
 
         <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          <li><a href="/" onClick={close}>Home</a></li>
+          <li><NavLink to="/" end onClick={close}>Home</NavLink></li>
           <li><NavLink to="/analyse" onClick={close}>Analyse</NavLink></li>
           <li><NavLink to="/dashboard" onClick={close}>Dashboard</NavLink></li>
           <li><NavLink to="/about" onClick={close}>About</NavLink></li>
@@ -46,7 +46,7 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="mobile-menu-overlay"
           >
-            <a href="/" onClick={close}>Home</a>
+            <NavLink to="/" end onClick={close}>Home</NavLink>
             <NavLink to="/analyse" onClick={close}>Analyse</NavLink>
             <NavLink to="/dashboard" onClick={close}>Dashboard</NavLink>
             <NavLink to="/about" onClick={close}>About</NavLink>

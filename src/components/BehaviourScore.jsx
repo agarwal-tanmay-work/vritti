@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { getScoreHistory } from '../utils/storage';
 
 function getScoreColor(score) {
-  if (score < 50) return 'var(--orange)';
-  if (score <= 70) return 'var(--gold)';
-  return 'var(--gain-green)';
+  if (score < 50) return 'var(--danger)';
+  if (score <= 70) return 'var(--orange-strong)';
+  return 'var(--success)';
 }
 
 export default function BehaviourScore({ score, totalTrades, analysisPeriod, biasCount = 13 }) {
@@ -49,8 +49,8 @@ export default function BehaviourScore({ score, totalTrades, analysisPeriod, bia
           <svg width="200" height="200" viewBox="0 0 200 200" role="meter" aria-valuenow={displayScore} aria-valuemin={0} aria-valuemax={100} aria-label="Behaviour score meter">
             <defs>
               <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#E85D26" />
-                <stop offset="100%" stopColor="#F0B429" />
+                <stop offset="0%" stopColor="#387ed1" />
+                <stop offset="100%" stopColor="#7fb2f1" />
               </linearGradient>
             </defs>
             <circle

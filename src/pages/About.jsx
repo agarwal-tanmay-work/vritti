@@ -99,7 +99,7 @@ export default function About() {
             <p>
               I build actual products. An anonymous whistleblower platform. A failure intelligence system. A fully autonomous video generator. I trade on Zerodha Kite myself, which is why Vritti isn't hypothetical. Every bias it detects is one I've caught in my own trades.
             </p>
-            <p style={{ marginTop: 16 }}>
+            <p className="about-body-spaced">
               I built Vritti because Nithin Kamath described exactly what AI should do for retail investors, and nobody had built it yet. I want to fix that from inside Zerodha.
             </p>
           </div>
@@ -129,44 +129,22 @@ export default function About() {
         <div className="section reveal">
           <div className="section-eyebrow">PORTFOLIO HOLDINGS</div>
           <h2 className="section-heading">Skills</h2>
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '12px',
-            marginTop: '24px'
-          }}>
+          <div className="skills-cloud">
             {skills.map((skill, i) => (
               <motion.div
                 key={i}
+                className="skill-chip"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
-                style={{
-                  padding: '12px 20px',
-                  background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-                  border: '1px solid #dee2e6',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  color: '#212529',
-                  cursor: 'default'
-                }}
               >
                 {skill}
               </motion.div>
             ))}
           </div>
-          <div style={{
-            marginTop: '24px',
-            padding: '16px',
-            background: '#f8f9fa',
-            borderRadius: '8px',
-            border: '1px solid #e9ecef',
-            fontSize: '13px',
-            color: '#6c757d'
-          }}>
-            <span style={{ fontFamily: 'monospace' }}>Portfolio Value: Growing.</span>
-            <span style={{ fontFamily: 'monospace', marginLeft: 16 }}>Drawdown: Zero.</span>
+          <div className="skills-summary">
+            <span className="font-mono">Portfolio Value: Growing.</span>
+            <span className="font-mono">Drawdown: Zero.</span>
           </div>
         </div>
 
@@ -183,14 +161,14 @@ export default function About() {
                 style={{ transitionDelay: `${i * 0.05}s` }}
               >
                 <div className="project-card-left">
-                  <div className="project-symbol">{p.symbol}</div>
-                  <div className="project-meta-row">
-                    <span className="project-meta-label">Entry:</span>
-                    <span className="project-meta-val">{p.entry}</span>
-                    <span className="project-meta-label" style={{ marginLeft: 16 }}>Strategy:</span>
-                    <span className="project-meta-val">{p.strategy}</span>
-                  </div>
+                <div className="project-symbol">{p.symbol}</div>
+                <div className="project-meta-row">
+                  <span className="project-meta-label">Entry:</span>
+                  <span className="project-meta-val">{p.entry}</span>
+                  <span className="project-meta-label project-meta-gap">Strategy:</span>
+                  <span className="project-meta-val">{p.strategy}</span>
                 </div>
+              </div>
                 <div className="project-card-right">
                   <span className={`status-pill ${statusClass(p.status)}`}>{p.status}</span>
                 </div>
@@ -207,7 +185,7 @@ export default function About() {
               Zerodha stands for. Zero barriers, financial literacy, and technology in
               service of ordinary investors.
             </p>
-            <p style={{ marginTop: 12 }}>
+            <p className="zerodha-note-paragraph">
               The internship would just mean I get to keep building it alongside the
               people who started this."
             </p>

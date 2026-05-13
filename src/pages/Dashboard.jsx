@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import {
@@ -18,6 +18,19 @@ const biasOrder = [
   'revengeTrading', 'recencyBias', 'overconfidenceAfterWins', 'sectorConcentration',
   'sunkCostFallacy', 'calendarEffectBias', 'informationOverload', 'dispositionEffect',
 ];
+
+const chartTheme = {
+  grid: '#e8edf3',
+  axis: '#6b7280',
+  tooltipBg: '#ffffff',
+  tooltipBorder: '#d7e0ea',
+  blue: '#387ed1',
+  green: '#4caf50',
+  orange: '#ffb347',
+  orangeStrong: '#f59e0b',
+  red: '#df514c',
+  gold: '#d4a017',
+};
 
 export default function Dashboard({ analysis }) {
   const navigate = useNavigate();
@@ -86,17 +99,17 @@ export default function Dashboard({ analysis }) {
     const worst = params.get('worst');
     if (score) {
       return (
-        <div className="page-container" style={{ textAlign: 'center', paddingTop: 120 }}>
-          <h2 style={{ fontSize: 20, marginBottom: 12 }}>Shared Vritti Snapshot</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: 24 }}>Behaviour score: {score} | Top bias: {worst || 'N/A'}</p>
+        <div className="page-container empty-state">
+          <h2>Shared Vritti Snapshot</h2>
+          <p>Behaviour score: {score} | Top bias: {worst || 'N/A'}</p>
           <button className="btn-primary" onClick={() => navigate('/analyse')}>Run your own analysis →</button>
         </div>
       );
     }
     return (
-      <div className="page-container" style={{ textAlign: 'center', paddingTop: 120 }}>
-        <h2 style={{ fontSize: 20, marginBottom: 12 }}>No analysis data yet</h2>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: 24 }}>
+      <div className="page-container empty-state">
+        <h2>No analysis data yet</h2>
+        <p>
           Upload your trade history or try sample data to see your bias report.
         </p>
         <button className="btn-primary" onClick={() => navigate('/analyse')}>
@@ -106,7 +119,6 @@ export default function Dashboard({ analysis }) {
     );
   }
 
-  const shareUrl = `${window.location.origin}/dashboard?score=${analysis.behaviourScore}&worst=${analysis.worstBias}`;
   const isDemoData = String(analysis.sourceLabel || '').toUpperCase().includes('SAMPLE');
 
   return (
@@ -126,31 +138,31 @@ export default function Dashboard({ analysis }) {
         </div>
       </motion.div>
 
-      <div className="card-no-hover premium-panel" style={{ marginBottom: 20 }}>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 13 }}>
+      <div className="card-no-hover premium-panel report-source-card">
+        <p>
           <strong>Data source:</strong> {isDemoData ? 'Demo dataset (synthetic example)' : 'Your uploaded Zerodha export'}.
           {isDemoData ? ' Upload your own file on Analyse page for your real report.' : ' This report is computed from your uploaded trades.'}
         </p>
       </div>
 
-      <div style={{ marginBottom: 24 }}>
+      <div className="dashboard-philosophy-block">
         <BehaviourPhilosophy />
       </div>
 
       {/* Section 1: Behaviour Score */}
       <div className="section reveal">
         <div className="section-eyebrow">SUMMARY</div>
-        <h2 className="section-heading" style={{ fontSize: 'clamp(22px, 3vw, 34px)', marginBottom: 20 }}>Behaviour Overview</h2>
+        <h2 className="section-heading dashboard-section-title">Behaviour Overview</h2>
         <div className="dash-kpi-grid">
-          <motion.div className="kpi-tile" whileHover={{ y: -4, rotateX: 3 }}>
+          <motion.div className="kpi-tile" whileHover={{ y: -3 }}>
             <p className="kpi-label">Behaviour Score</p>
             <p className="kpi-value">{displayBehaviourScore}</p>
           </motion.div>
-          <motion.div className="kpi-tile" whileHover={{ y: -4, rotateX: 3 }}>
+          <motion.div className="kpi-tile" whileHover={{ y: -3 }}>
             <p className="kpi-label">Worst Bias</p>
             <p className="kpi-value kpi-small">{analysis.worstBias}</p>
           </motion.div>
-          <motion.div className="kpi-tile" whileHover={{ y: -4, rotateX: 3 }}>
+          <motion.div className="kpi-tile" whileHover={{ y: -3 }}>
             <p className="kpi-label">Counterfactual Upside</p>
             <p className="kpi-value">₹{displayCounterfactual.toLocaleString('en-IN')}</p>
           </motion.div>
@@ -161,17 +173,17 @@ export default function Dashboard({ analysis }) {
           analysisPeriod={analysis.analysisPeriod}
           biasCount={Object.keys(analysis.biases || {}).length}
         />
-        <div className="card-no-hover premium-panel" style={{ marginTop: 18 }}>
+        <div className="card-no-hover premium-panel counterfactual-panel">
           <h3>Counterfactual Engine</h3>
-          <p style={{ color: 'var(--text-secondary)' }}>{analysis.counterfactual?.narrative}</p>
-          <p style={{ marginTop: 8 }}>
+          <p>{analysis.counterfactual?.narrative}</p>
+          <p className="counterfactual-copy">
             If you had traded without these biases, your portfolio would be approximately{' '}
-            <strong style={{ color: 'var(--gain-green)' }}>
+            <strong className="counterfactual-highlight">
               ₹{analysis.counterfactual?.improvement?.toLocaleString('en-IN') || 0} better off
             </strong>{' '}
             in this rules based replay. This is not a forecast of future performance.
           </p>
-          <div style={{ marginTop: 12, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div className="counterfactual-actions">
             <button className="btn-secondary" onClick={() => window.open('/report', '_blank')}>Export Report</button>
           </div>
         </div>
@@ -219,14 +231,14 @@ export default function Dashboard({ analysis }) {
           avgLoserHold={analysis.avgLoserHold}
           holdRatio={analysis.holdRatio}
         />
-        <div className="card-no-hover premium-panel chart-surface" style={{ marginTop: 16 }}>
+        <div className="card-no-hover premium-panel chart-surface chart-spaced">
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={(analysis.matrixPoints || []).slice(0, 40)}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
-              <XAxis dataKey="symbol" hide stroke="#555" />
-              <YAxis stroke="#555" tick={{ fill: '#555', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#161616', border: '1px solid #2a2a2a', borderRadius: 8, color: '#fff' }} />
-              <Bar dataKey="holdingDays" fill="#E85D26" radius={[2,2,0,0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.grid} />
+              <XAxis dataKey="symbol" hide stroke={chartTheme.axis} />
+              <YAxis stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              <Tooltip contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }} />
+              <Bar dataKey="holdingDays" fill={chartTheme.blue} radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -244,14 +256,14 @@ export default function Dashboard({ analysis }) {
             <div>Panic Sells ({analysis.quadrantCounts?.panicSells || 0})</div>
             <div>Bagholding ({analysis.quadrantCounts?.bagholding || 0})</div>
           </div>
-          <div className="chart-surface" style={{ marginTop: 12 }}>
+          <div className="chart-surface chart-top-gap">
           <ResponsiveContainer width="100%" height={320}>
             <ScatterChart>
-              <CartesianGrid stroke="#2a2a2a" />
-              <XAxis type="number" dataKey="x" name="Holding Days" stroke="#555" tick={{ fill: '#555', fontSize: 11 }} />
-              <YAxis type="number" dataKey="y" name="PnL" stroke="#555" tick={{ fill: '#555', fontSize: 11 }} />
-              <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ background: '#161616', border: '1px solid #2a2a2a', borderRadius: 8, color: '#fff' }} formatter={(value, name) => [value, name]} />
-              <Scatter data={matrixData} fill="#E85D26" opacity={0.8} />
+              <CartesianGrid stroke={chartTheme.grid} />
+              <XAxis type="number" dataKey="x" name="Holding Days" stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              <YAxis type="number" dataKey="y" name="PnL" stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }} formatter={(value, name) => [value, name]} />
+              <Scatter data={matrixData} fill={chartTheme.orangeStrong} opacity={0.75} />
             </ScatterChart>
           </ResponsiveContainer>
           </div>
@@ -279,16 +291,16 @@ export default function Dashboard({ analysis }) {
         <div className="card-no-hover premium-panel chart-surface">
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={analysis.monthlyWaterfall || []}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
-              <XAxis dataKey="month" stroke="#555" tick={{ fill: '#555', fontSize: 11 }} />
-              <YAxis stroke="#555" tick={{ fill: '#555', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#161616', border: '1px solid #2a2a2a', borderRadius: 8, color: '#fff' }} />
-              <Bar dataKey="pnl" radius={[2,2,0,0]}>
+              <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.grid} />
+              <XAxis dataKey="month" stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              <YAxis stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              <Tooltip contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }} />
+              <Bar dataKey="pnl" radius={[3, 3, 0, 0]}>
                 {(analysis.monthlyWaterfall || []).map((entry) => (
-                  <Cell key={entry.month} fill={entry.pnl >= 0 ? '#25C26E' : '#E74C3C'} />
+                  <Cell key={entry.month} fill={entry.pnl >= 0 ? chartTheme.green : chartTheme.red} />
                 ))}
               </Bar>
-              <Line type="monotone" dataKey="cumulative" stroke="#E85D26" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="cumulative" stroke={chartTheme.blue} strokeWidth={2} dot={false} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -297,20 +309,20 @@ export default function Dashboard({ analysis }) {
       <div className="section reveal">
         <div className="section-header"><h2>Bias Radar Chart</h2></div>
         <div className="card-no-hover premium-panel chart-surface">
-          <div style={{ marginBottom: 12, display: 'flex', gap: 10 }}>
+          <div className="chart-toggle-row">
             <button className="btn-secondary" onClick={() => setRadarProfile((p) => ({ ...p, mine: !p.mine }))}>My Profile</button>
             <button className="btn-secondary" onClick={() => setRadarProfile((p) => ({ ...p, ideal: !p.ideal }))}>Ideal</button>
             <button className="btn-secondary" onClick={() => setRadarProfile((p) => ({ ...p, top10: !p.top10 }))}>Top 10%</button>
           </div>
           <ResponsiveContainer width="100%" height={340}>
             <RadarChart data={analysis.radarData || []}>
-              <PolarGrid stroke="#2a2a2a" />
-              <PolarAngleAxis dataKey="bias" tick={{ fill: '#555', fontSize: 11 }} />
-              {radarProfile.mine ? <Radar name="My Profile" dataKey="mine" stroke="#E85D26" fill="#E85D26" fillOpacity={0.25} /> : null}
-              {radarProfile.ideal ? <Radar name="Ideal Trader" dataKey="ideal" stroke="#25C26E" fillOpacity={0} /> : null}
-              {radarProfile.top10 ? <Radar name="Top 10%" dataKey="top10" stroke="#F0B429" fillOpacity={0} /> : null}
-              <Legend wrapperStyle={{ color: '#A0A0A0', fontSize: 12 }} />
-              <Tooltip contentStyle={{ background: '#161616', border: '1px solid #2a2a2a', borderRadius: 8, color: '#fff' }} />
+              <PolarGrid stroke={chartTheme.grid} />
+              <PolarAngleAxis dataKey="bias" tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              {radarProfile.mine ? <Radar name="My Profile" dataKey="mine" stroke={chartTheme.blue} fill={chartTheme.blue} fillOpacity={0.18} /> : null}
+              {radarProfile.ideal ? <Radar name="Ideal Trader" dataKey="ideal" stroke={chartTheme.green} fillOpacity={0} /> : null}
+              {radarProfile.top10 ? <Radar name="Top 10%" dataKey="top10" stroke={chartTheme.gold} fillOpacity={0} /> : null}
+              <Legend wrapperStyle={{ color: chartTheme.axis, fontSize: 12 }} />
+              <Tooltip contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }} />
             </RadarChart>
           </ResponsiveContainer>
         </div>
@@ -341,12 +353,12 @@ export default function Dashboard({ analysis }) {
         <div className="card-no-hover premium-panel chart-surface">
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie data={analysis.sectorBreakdown || []} dataKey="value" nameKey="sector" outerRadius={100} label={(x) => `${x.sector} ${x.pct}%`} labelLine={{ stroke: '#555' }}>
+              <Pie data={analysis.sectorBreakdown || []} dataKey="value" nameKey="sector" outerRadius={100} label={(x) => `${x.sector} ${x.pct}%`} labelLine={{ stroke: chartTheme.axis }}>
                 {(analysis.sectorBreakdown || []).map((entry, i) => (
-                  <Cell key={entry.sector} fill={['#E85D26','#25C26E','#F0B429','#387ED1','#9B59B6','#1ABC9C'][i % 6]} />
+                  <Cell key={entry.sector} fill={[chartTheme.blue, chartTheme.orangeStrong, chartTheme.green, '#7c3aed', '#14b8a6', '#ef4444'][i % 6]} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ background: '#161616', border: '1px solid #2a2a2a', borderRadius: 8, color: '#fff' }} />
+              <Tooltip contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -357,13 +369,13 @@ export default function Dashboard({ analysis }) {
         <div className="card-no-hover premium-panel chart-surface">
           <ResponsiveContainer width="100%" height={260}>
             <BarChart data={analysis.monthScatterData || []}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
-              <XAxis dataKey="month" stroke="#555" tick={{ fill: '#555', fontSize: 11 }} />
-              <YAxis stroke="#555" tick={{ fill: '#555', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#161616', border: '1px solid #2a2a2a', borderRadius: 8, color: '#fff' }} />
-              <Bar dataKey="uniqueSymbols" radius={[2,2,0,0]}>
+              <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.grid} />
+              <XAxis dataKey="month" stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              <YAxis stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+              <Tooltip contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }} />
+              <Bar dataKey="uniqueSymbols" radius={[3, 3, 0, 0]}>
                 {(analysis.monthScatterData || []).map((x) => (
-                  <Cell key={x.month} fill={x.uniqueSymbols > 8 ? '#F0B429' : '#E85D26'} />
+                  <Cell key={x.month} fill={x.uniqueSymbols > 8 ? chartTheme.orangeStrong : chartTheme.blue} />
                 ))}
               </Bar>
             </BarChart>

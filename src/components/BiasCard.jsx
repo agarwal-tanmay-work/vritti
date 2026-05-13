@@ -85,7 +85,7 @@ export default function BiasCard({ name, bias, index }) {
           <motion.div
             className="bias-bar-fill"
             style={{
-              background: `linear-gradient(90deg, var(--orange) 0%, var(--gain-green) 100%)`,
+              background: `linear-gradient(90deg, var(--accent) 0%, var(--orange-strong) 100%)`,
               opacity: 0.95,
             }}
             initial={{ width: 0 }}

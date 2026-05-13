@@ -149,7 +149,7 @@ export default function Analyse({ onAnalysisComplete }) {
           <div className="error-card">
             <h3>Parse Error</h3>
             <p>{error}</p>
-            <p style={{ marginTop: 8, fontSize: 12, color: 'var(--text-muted)' }}>
+            <p className="subtle-note">
               Check the expected format below.
             </p>
           </div>
@@ -211,7 +211,7 @@ export default function Analyse({ onAnalysisComplete }) {
                 Meet Rahul — a 28-year-old IT professional from Pune who's been trading on Kite for 9 months
                 and thinks he's pretty good at it. He isn't. Run his demo data to see what Vritti finds.
               </p>
-              <button id="demo-data-btn" className="btn-primary" style={{ width: '100%' }} onClick={handleSampleData}>
+              <button id="demo-data-btn" className="btn-primary full-width" onClick={handleSampleData}>
                 Analyse Rahul's Trades →
               </button>
               <p className="demo-meta">120 trades · 9 months · Zerodha Kite</p>
@@ -227,7 +227,7 @@ export default function Analyse({ onAnalysisComplete }) {
             For Tax P&amp;L, use the Tradewise Exits sheet. Minimum required fields: <strong>symbol</strong>, <strong>trade_type</strong>,{' '}
             <strong>quantity</strong>, <strong>price</strong>, and a date column.
           </p>
-          <div style={{ overflowX: 'auto' }}>
+          <div className="table-scroll">
             <table className="csv-table-new">
               <thead>
                 <tr>

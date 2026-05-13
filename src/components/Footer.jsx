@@ -21,12 +21,13 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-main">
-        <div className="footer-brand">
+        <div className="footer-brand-block">
           <VrittiLogo size={24} />
+          <p className="footer-brand-copy">Built by Tanmay Agarwal.</p>
         </div>
 
         <nav className="footer-nav" aria-label="Footer navigation">
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
           <Link to="/analyse">Analyse</Link>
           <Link to="/dashboard">Dashboard</Link>
           <Link to="/about">About</Link>

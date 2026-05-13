@@ -175,6 +175,42 @@ export default function Home() {
         <div className="hero-glow-orb" />
         <div className="hero-glow-orb-2" />
         <div className="home-hero-inner">
+          <div className="hero-product-stage" aria-hidden="true">
+            <div className="hero-product-shell hero-shell-left">
+              <span className="hero-shell-line short" />
+              <span className="hero-shell-line" />
+              <span className="hero-shell-line short" />
+              <div className="hero-shell-bars">
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
+            <div className="hero-product-shell hero-shell-right">
+              <span className="hero-shell-line short" />
+              <span className="hero-shell-line" />
+              <div className="hero-shell-chart">
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
+            <div className="hero-product-shell hero-shell-main">
+              <div className="hero-shell-head">
+                <span className="hero-shell-dot" />
+                <span className="hero-shell-dot" />
+                <span className="hero-shell-dot" />
+              </div>
+              <div className="hero-shell-grid">
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="hero-shell-graph" />
+            </div>
+          </div>
           <div className="hero-eyebrow">BUILT FOR ZERODHA KITE · INSPIRED BY NITHIN KAMATH</div>
           <h1 className="hero-h1">
             See The Trading<br />
@@ -257,7 +293,7 @@ export default function Home() {
             <div className="holding-visual">
               <div className="holding-bar-label">Winners</div>
               <div className="holding-bar-track"><div className="holding-bar-fill green" style={{ width: '25%' }}>8d</div></div>
-              <div className="holding-bar-label" style={{ marginTop: 12 }}>Losers</div>
+              <div className="holding-bar-label holding-bar-label-spaced">Losers</div>
               <div className="holding-bar-track"><div className="holding-bar-fill red" style={{ width: '80%' }}>41d</div></div>
             </div>
           </div>
@@ -280,7 +316,7 @@ export default function Home() {
             <div className="counterfactual-visual">
               <div className="cf-label">Actual P&L</div>
               <div className="cf-value loss">−₹18,400</div>
-              <div className="cf-label" style={{ marginTop: 16 }}>Without Biases</div>
+              <div className="cf-label cf-label-spaced">Without Biases</div>
               <div className="cf-value gain">+₹32,100</div>
               <div className="cf-diff">Difference: <strong>₹50,500</strong></div>
             </div>
