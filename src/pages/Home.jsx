@@ -199,7 +199,7 @@ export default function Home() {
             <div className="section-eyebrow">THE PHILOSOPHY</div>
             <h2 className="section-heading">Built on What Nithin Actually Said</h2>
             <p className="split-body">
-              Nithin Kamath once wrote that AI can&apos;t help retail investors make more money — but it can help
+              Nithin Kamath once wrote that AI can&apos;t help retail investors make more money but it can help
               them behave better. Vritti is the only tool built around that exact idea. We don&apos;t predict
               markets. We analyse your trades and show you the patterns you can&apos;t see yourself.
             </p>

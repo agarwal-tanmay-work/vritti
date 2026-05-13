@@ -365,21 +365,38 @@ export default function Dashboard({ analysis }) {
       </div>
 
       <div className="section reveal">
-        <div className="section-header"><h2>Information Overload</h2></div>
+        <div className="section-header">
+          <h2>Information Overload</h2>
+          <p>
+            Unique symbols traded per month. Months with more than 8 different symbols are flagged — spreading attention across too many stocks at once is a recognised behavioural bias that reduces decision quality.
+          </p>
+        </div>
         <div className="card-no-hover premium-panel chart-surface">
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={analysis.monthScatterData || []}>
-              <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.grid} />
-              <XAxis dataKey="month" stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
-              <YAxis stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }} />
-              <Bar dataKey="uniqueSymbols" radius={[3, 3, 0, 0]}>
-                {(analysis.monthScatterData || []).map((x) => (
-                  <Cell key={x.month} fill={x.uniqueSymbols > 8 ? chartTheme.orangeStrong : chartTheme.blue} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          {(analysis.monthScatterData || []).length === 0 ? (
+            <p style={{ color: '#6b7280', padding: '1.5rem 0', textAlign: 'center' }}>
+              Not enough buy data to chart symbol spread by month. Upload a trade book with at least a few months of buys to see this chart.
+            </p>
+          ) : (
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={analysis.monthScatterData || []}>
+                <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.grid} />
+                <XAxis dataKey="month" stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} />
+                <YAxis stroke={chartTheme.axis} tick={{ fill: chartTheme.axis, fontSize: 11 }} label={{ value: 'Unique Symbols', angle: -90, position: 'insideLeft', fill: chartTheme.axis, fontSize: 11 }} />
+                <Tooltip
+                  contentStyle={{ background: chartTheme.tooltipBg, border: `1px solid ${chartTheme.tooltipBorder}`, borderRadius: 8, color: '#1f2937' }}
+                  formatter={(value) => [`${value} symbols`, 'Unique Symbols']}
+                />
+                <Bar dataKey="uniqueSymbols" radius={[3, 3, 0, 0]}>
+                  {(analysis.monthScatterData || []).map((x) => (
+                    <Cell key={x.month} fill={x.uniqueSymbols > 8 ? chartTheme.orangeStrong : chartTheme.blue} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+          <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.75rem' }}>
+            🟠 Orange bars = months with &gt;8 unique symbols traded (flagged as overload risk)
+          </p>
         </div>
       </div>
 
@@ -404,7 +421,7 @@ export default function Dashboard({ analysis }) {
             The best next step isn't a better stock. It is a better understanding of yourself.
           </p>
           <a
-            href="https://zerodha.com/varsity/chapter/trading-biases/"
+            href="https://zerodha.com/varsity/module/trading-psychology/"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary"

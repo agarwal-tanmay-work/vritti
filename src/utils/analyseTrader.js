@@ -339,14 +339,28 @@ export function analyseTrader(trades) {
 
   // 12) Information overload
   const monthSymbolMap = {};
+  const monthSymbolTradesMap = {};
   buyTrades.forEach((b) => {
     const mk = getMonthKey(b.date);
     if (!monthSymbolMap[mk]) monthSymbolMap[mk] = new Set();
+    if (!monthSymbolTradesMap[mk]) monthSymbolTradesMap[mk] = [];
     monthSymbolMap[mk].add(b.symbol);
+    monthSymbolTradesMap[mk].push(b);
   });
-  const monthScatterData = Object.entries(monthSymbolMap).map(([month, set]) => ({ month, uniqueSymbols: set.size }));
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const monthScatterData = Object.entries(monthSymbolMap)
+    .sort(([a], [b]) => (a > b ? 1 : -1))
+    .map(([mk, set]) => {
+      const [year, mon] = mk.split('-');
+      const label = `${monthNames[Number(mon) - 1]} ${year}`;
+      return { month: label, uniqueSymbols: set.size };
+    });
   const flaggedScatterMonths = monthScatterData.filter((m) => m.uniqueSymbols > 8);
   const informationOverloadScore = Math.round((flaggedScatterMonths.length / Math.max(1, monthScatterData.length)) * 100);
+  const flaggedMonthKeys = Object.entries(monthSymbolMap)
+    .filter(([, set]) => set.size > 8)
+    .map(([mk]) => mk);
+  const infoOverloadInstances = flaggedMonthKeys.flatMap((mk) => monthSymbolTradesMap[mk] || []);
 
   // 13) Disposition effect
   const paperGains = openPositions.filter((p) => {
@@ -573,7 +587,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(panicScore),
         instances: panicSells,
         description: `You had ${panicSells.length} quick loss-making exits after a local dip (from your own price path) within 3 days of entry. Missed-recovery estimate: ${formatInr(panicSellCost)}.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Selling too quickly after fear-driven drawdowns.',
       },
       fomoBuying: {
@@ -582,7 +596,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(fomoScore),
         instances: fomoBuys,
         description: `You made ${fomoBuys.length} late entries near 30-day highs; percentile shows where you bought inside that window.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Buying because price already ran up and feels urgent.',
       },
       lossAversion: {
@@ -591,7 +605,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(lossAversionScore),
         instances: losers.filter(t => t.holdingDays > 30),
         description: `You held losers ${Math.round(holdRatio)}x longer than winners.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Holding losses too long while booking gains too early.',
       },
       overtrading: {
@@ -600,7 +614,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(overtradingScore),
         instances: overtradedWeeks.flatMap(([, tds]) => tds),
         description: `${overtradedWeeks.length} out of ${totalWeeks} weeks had more than 5 trades. You tend to overtrade during volatile periods, increasing transaction costs and emotional exposure.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Trading too frequently without better expected edge.',
       },
       herdBehaviour: {
@@ -611,7 +625,7 @@ export function analyseTrader(trades) {
         description: herdTrades.length === 0
           ? 'No crowd-chasing entries detected in the tracked hype windows.'
           : `You bought ${herdTrades.length} time(s) into high-attention names near modelled hype windows (${[...new Set(herdTrades.map((t) => t.symbol))].join(', ')}). Outcomes on matched exits: ${herdOutcomeSummary.losses} loss, ${herdOutcomeSummary.wins} win${herdOutcomeSummary.pending ? `, ${herdOutcomeSummary.pending} open/unmatched` : ''}.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Following social momentum instead of independent thesis.',
       },
       revengeTrading: {
@@ -620,7 +634,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(revengeScore),
         instances: revengeInstances.map((r) => r.revengeBuy),
         description: `${revengeInstances.length} revenge buys followed losses. Avg delay: ${avgRevengeDelay}h.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Jumping back in right after a loss to recover quickly.',
       },
       recencyBias: {
@@ -629,7 +643,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(recencyScore),
         instances: [...recencyBuys, ...recencyLossSells],
         description: `${recencyBuys.length} buys chased recent winners and ${recencyLossSells.length} loss exits followed recent downtrends.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Assuming recent trend will continue indefinitely.',
       },
       overconfidenceAfterWins: {
@@ -638,7 +652,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(overconfidenceScore),
         instances: overconfidenceInstances.map((i) => i.after),
         description: `${overconfidenceInstances.length} post-streak size jumps (>30%) were detected.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Increasing risk aggressively after winning streaks.',
       },
       sectorConcentration: {
@@ -656,7 +670,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(sunkCostScore),
         instances: sunkInstances.flatMap((i) => i.buys),
         description: `${sunkInstances.length} averaging-down patterns detected. Capital trapped: ${formatInr(sunkCapital)}.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Adding to losers only to reduce average price psychologically.',
       },
       calendarEffectBias: {
@@ -665,16 +679,18 @@ export function analyseTrader(trades) {
         color: getSeverityColor(calendarEffectScore),
         instances: calendarSensitiveTrades,
         description: `${calendarSensitiveTrades.length} trades clustered around high-anxiety calendar windows.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Trading patterns driven by date events, not setup quality.',
       },
       informationOverload: {
         score: informationOverloadScore,
         ...getSeverityLabel(informationOverloadScore),
         color: getSeverityColor(informationOverloadScore),
-        instances: buyTrades,
-        description: `${flaggedScatterMonths.length} months had >8 unique symbols traded.`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        instances: infoOverloadInstances,
+        description: flaggedScatterMonths.length === 0
+          ? `No months exceeded 8 unique symbols. Your trading is reasonably focused across the analysis period.`
+          : `${flaggedScatterMonths.length} month(s) had more than 8 unique symbols traded — spreading attention too thin increases emotional and execution risk.`,
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Spreading attention across too many symbols at once.',
       },
       dispositionEffect: {
@@ -683,7 +699,7 @@ export function analyseTrader(trades) {
         color: getSeverityColor(dispositionScore),
         instances: [...winners.slice(0, 5), ...openPositions.slice(0, 5)],
         description: `PGR ${pgr.toFixed(2)} vs PLR ${plr.toFixed(2)} (score ${dispositionRaw.toFixed(2)}).`,
-        varsityLink: 'https://zerodha.com/varsity/chapter/trading-biases/',
+        varsityLink: 'https://zerodha.com/varsity/module/trading-psychology/',
         glossary: 'Realising gains faster than losses in a systematic pattern.',
         researchBadge: true,
       },

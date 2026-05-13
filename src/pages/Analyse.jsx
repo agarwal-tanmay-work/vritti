@@ -182,7 +182,7 @@ export default function Analyse({ onAnalysisComplete }) {
               <p>or click to browse (.csv, .xls, .xlsx)</p>
               <a
                 className="upload-link-new"
-                href="https://zerodha.com/varsity/module/introduction-to-stock-markets/chapter/the-trading-terminal/"
+                href="https://support.zerodha.com/category/console/reports/other-queries/articles/where-can-i-see-all-the-trades-i-ve-taken-for-a-particular-period"
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}

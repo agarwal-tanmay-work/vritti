@@ -3,10 +3,22 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const skills = [
-  'Python & Data Science',
+  'Python',
+  'Java',
+  'C',
+  'LangChain',
+  'NLP',
+  'Prompt Engineering',
+  'N8N',
+  'Git / GitHub',
+  'Data Visualization',
+  'Data Analysis',
+  'Tableau',
+  'Stock Market Trading',
+  'Business Analytics',
+  'E-Commerce',
   'React & Frontend',
   'Machine Learning',
-  'Financial Markets',
   'AI / LLM Engineering',
 ];
 
@@ -87,8 +99,8 @@ export default function About() {
           </div>
           <div className="about-status-card">
             <div className="about-status-row">
-              <span className="about-status-label">Seeking</span>
-              <span className="about-status-value">AI Internship at Zerodha</span>
+              <span className="about-status-label">Status</span>
+              <span className="about-status-value">Building · Learning · Shipping</span>
             </div>
           </div>
         </motion.div>
@@ -100,7 +112,7 @@ export default function About() {
               I build actual products. An anonymous whistleblower platform. A failure intelligence system. A fully autonomous video generator. I trade on Zerodha Kite myself, which is why Vritti isn't hypothetical. Every bias it detects is one I've caught in my own trades.
             </p>
             <p className="about-body-spaced">
-              I built Vritti because Nathan described exactly what AI should do for retail investors, and nobody had built it yet. I want to fix that from inside Zerodha.
+              I built Vritti because Nithin Kamath described exactly what AI should do for retail investors — help them behave better, not generate alpha — and nobody had built it yet. Vritti is that tool.
             </p>
           </div>
           <div className="about-bio-actions">
@@ -125,10 +137,35 @@ export default function About() {
           </div>
         </div>
 
-        {/* NATHAN'S QUOTE */}
+        {/* ABOUT VRITTI */}
+        <div className="section reveal">
+          <div className="section-eyebrow">ABOUT THE PRODUCT</div>
+          <h2 className="section-heading">What is Vritti?</h2>
+          <div className="zerodha-note-card">
+            <div className="zerodha-note-body">
+              <p>
+                Vritti is a free, privacy-first behavioural analysis tool for retail stock market investors who trade on Zerodha Kite.
+              </p>
+              <p className="zerodha-note-paragraph">
+                You upload your Zerodha trade book CSV — the same file you download from Kite's Portfolio → P&L section — and Vritti analyses every completed trade for 13 psychological biases: panic selling, FOMO buying, loss aversion, revenge trading, overtrading, herd behaviour, recency bias, overconfidence after wins, sector concentration, sunk cost fallacy, calendar effect bias, information overload, and disposition effect.
+              </p>
+              <p className="zerodha-note-paragraph">
+                The output is a Behaviour Score (0–100), a plain-English breakdown of every bias found, a counterfactual showing what your portfolio would look like without those biases, and a Nudge Feed of personalised warnings based on your actual patterns.
+              </p>
+              <p className="zerodha-note-paragraph">
+                Everything runs entirely in your browser. Your CSV is never uploaded to any server. When you close the tab, the data is gone. This is a hard architectural decision — Vritti will never have a backend that touches your financial data.
+              </p>
+              <p className="zerodha-note-paragraph">
+                Vritti is not a trading signal tool. It does not predict markets, generate alpha, or give buy/sell tips. It is a mirror — one that shows you the behavioural patterns quietly costing you money, so you can fix them yourself.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* NITHIN'S QUOTE */}
         <div className="section reveal">
           <div className="section-eyebrow">WHY I BUILT THIS</div>
-          <h2 className="section-heading">Inspired by Nathan</h2>
+          <h2 className="section-heading">Inspired by Nithin Kamath</h2>
           <div className="zerodha-note-card">
             <div className="zerodha-note-body">
               <p>
@@ -149,7 +186,7 @@ export default function About() {
               <p className="zerodha-note-paragraph">
                 This is still an edge, just a different kind. AI can make you more disciplined, but not smarter. And if you think about where most trading losses actually come from, that distinction matters more than people realise."
               </p>
-              <p className="zerodha-note-sig">— Nathan</p>
+              <p className="zerodha-note-sig">— Nithin Kamath</p>
             </div>
           </div>
         </div>
@@ -212,11 +249,7 @@ export default function About() {
             <p>
               "I didn't build Vritti to get a job. I built it because I believe in what
               Zerodha stands for. Zero barriers, financial literacy, and technology in
-              service of ordinary investors.
-            </p>
-            <p className="zerodha-note-paragraph">
-              The internship would just mean I get to keep building it alongside the
-              people who started this."
+              service of ordinary investors."
             </p>
             <p className="zerodha-note-sig">Tanmay</p>
           </div>
