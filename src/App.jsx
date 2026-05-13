@@ -34,6 +34,31 @@ function getInitialAnalysisState() {
   return { analysis: restored, restoreBanner };
 }
 
+function AppShell({ analysis, restoreBanner, onAnalysisComplete }) {
+  const { pathname } = useLocation();
+  const isPrintRoute = pathname === '/report';
+
+  return (
+    <>
+      <ScrollToTop />
+      {isPrintRoute ? null : <ScrollProgress />}
+      {isPrintRoute ? null : <Navbar />}
+      {!isPrintRoute && restoreBanner ? <div className="restore-banner">{restoreBanner}</div> : null}
+      <PageFade>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/analyse" element={<Analyse onAnalysisComplete={onAnalysisComplete} />} />
+          <Route path="/dashboard" element={<Dashboard analysis={analysis} />} />
+          <Route path="/report" element={<ReportPrint analysis={analysis} />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </PageFade>
+      {isPrintRoute ? null : <Footer />}
+    </>
+  );
+}
+
 export default function App() {
   const initialSession = getInitialAnalysisState();
   const [analysis, setAnalysis] = useState(() => initialSession.analysis);
@@ -58,21 +83,11 @@ export default function App() {
 
   return (
     <Router>
-      <ScrollToTop />
-      <ScrollProgress />
-      <Navbar />
-      {restoreBanner ? <div className="restore-banner">{restoreBanner}</div> : null}
-      <PageFade>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/analyse" element={<Analyse onAnalysisComplete={handleAnalysisComplete} />} />
-          <Route path="/dashboard" element={<Dashboard analysis={analysis} />} />
-          <Route path="/report" element={<ReportPrint analysis={analysis} />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </PageFade>
-      <Footer />
+      <AppShell
+        analysis={analysis}
+        restoreBanner={restoreBanner}
+        onAnalysisComplete={handleAnalysisComplete}
+      />
     </Router>
   );
 }
